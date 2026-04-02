@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Motorcycle Rental Rapid City & Black Hills | Vintage Ride USA",
+  title: "Motorcycle Rental Rapid City & Black Hills | Vintage Rides USA",
   description:
     "Rent a Royal Enfield Himalayan 450 in Rapid City, SD. Explore the Black Hills, Badlands, and Sturgis on a world-class adventure motorcycle. Daily rentals available May–September.",
   keywords: [
@@ -28,10 +28,10 @@ export const metadata: Metadata = {
     "adventure motorcycle rental South Dakota",
   ],
   openGraph: {
-    title: "Motorcycle Rental in Rapid City & Black Hills | Vintage Ride USA",
+    title: "Motorcycle Rental in Rapid City & Black Hills | Vintage Rides USA",
     description:
       "Rent a Royal Enfield Himalayan 450 in Rapid City and ride the Black Hills. $130/day + tax.",
-    siteName: "Vintage Ride USA",
+    siteName: "Vintage Rides USA",
   },
 };
 

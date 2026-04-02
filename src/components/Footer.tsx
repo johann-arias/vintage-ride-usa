@@ -7,7 +7,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <span className="text-white font-semibold tracking-widest text-sm uppercase">Vintage Ride</span>
+              <span className="text-white font-semibold tracking-widest text-sm uppercase">Vintage Rides</span>
               <span className="text-[#c8a45a] font-light text-sm tracking-wider">USA</span>
             </div>
             <p className="text-sm leading-relaxed">
@@ -47,7 +47,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-white/10 pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
-          <p>&copy; {new Date().getFullYear()} Vintage Ride LLC. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Vintage Rides LLC. All rights reserved.</p>
           <div className="flex gap-6">
             <Link href="/terms" className="hover:text-white transition-colors">Terms & Conditions</Link>
             <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>

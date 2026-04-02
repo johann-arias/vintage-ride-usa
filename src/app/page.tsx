@@ -216,7 +216,7 @@ export default function HomePage() {
             <blockquote className="text-white text-xl md:text-2xl font-light leading-relaxed mb-8 italic">
               Three weeks in the American West on a Himalayan 450. Best trip of my
               life. The bike never missed a beat — from asphalt to gravel to dirt.
-              Vintage Ride&apos;s support team was always one call away.
+              Vintage Rides&apos; support team was always one call away.
             </blockquote>
             <div className="text-white/50 text-sm tracking-wider">
               Marcus T. — Denver, CO
