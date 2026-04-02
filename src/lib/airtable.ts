@@ -157,6 +157,34 @@ export async function getBikesBlockedByRentals(
 
 const TOTAL_BIKES = 10;
 
+// Bikes are in Arizona (available for rental) Oct 1 – Apr 30 only.
+// May–Sep they're in the mountains for Freedom Tours.
+export const RENTAL_SEASON = { start: "10-01", end: "04-30" };
+
+/**
+ * Returns true if a date (MM-DD) falls within the Arizona rental season (Oct–Apr).
+ * The season spans a year boundary, so Oct-Dec and Jan-Apr are both valid.
+ */
+export function isInRentalSeason(mmdd: string): boolean {
+  return mmdd >= "10-01" || mmdd <= "04-30";
+}
+
+/**
+ * Returns true if the entire rental period falls within the Oct–Apr Arizona season.
+ */
+export function isPeriodInRentalSeason(startDate: string, endDate: string): boolean {
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+  // Walk each day and check — covers edge cases spanning the boundary
+  const cursor = new Date(start);
+  while (cursor <= end) {
+    const mmdd = `${String(cursor.getMonth() + 1).padStart(2, "0")}-${String(cursor.getDate()).padStart(2, "0")}`;
+    if (!isInRentalSeason(mmdd)) return false;
+    cursor.setDate(cursor.getDate() + 1);
+  }
+  return true;
+}
+
 export async function getAvailableBikeCount(
   startDate: string,
   endDate: string

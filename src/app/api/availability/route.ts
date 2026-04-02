@@ -3,6 +3,7 @@ import {
   getAvailableBikeCount,
   getActivePricingRules,
   calculateRentalPrice,
+  isPeriodInRentalSeason,
 } from "@/lib/airtable";
 
 export async function GET(req: NextRequest) {
@@ -26,6 +27,17 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "endDate must be after startDate" }, { status: 400 });
   }
 
+  // Bikes are in Arizona Oct–Apr only
+  if (!isPeriodInRentalSeason(startDate, endDate)) {
+    return NextResponse.json({
+      availableCount: 0,
+      requested: bikes,
+      canBook: false,
+      outOfSeason: true,
+      pricing: null,
+    });
+  }
+
   try {
     const [availableCount, pricingRules] = await Promise.all([
       getAvailableBikeCount(startDate, endDate),
@@ -38,6 +50,7 @@ export async function GET(req: NextRequest) {
       availableCount,
       requested: bikes,
       canBook: availableCount >= bikes,
+      outOfSeason: false,
       pricing: {
         dailyRate: pricing.dailyRate,
         totalDays: pricing.totalDays,
