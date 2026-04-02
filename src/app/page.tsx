@@ -20,15 +20,15 @@ export default function HomePage() {
           <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
             <div className="max-w-2xl">
               <p className="text-[#c8a45a] text-xs font-semibold tracking-[0.25em] uppercase mb-6">
-                Royal Enfield Himalayan 450 · Self-Guided
+                Motorcycle Rental · Rapid City & Black Hills
               </p>
               <h1 className="text-white text-5xl md:text-7xl font-light leading-[1.05] tracking-tight mb-6">
-                Ride America<br />
-                <span className="italic text-[#c8a45a]">Your Way</span>
+                Ride the<br />
+                <span className="italic text-[#c8a45a]">Black Hills</span>
               </h1>
               <p className="text-white/70 text-lg md:text-xl leading-relaxed mb-10 max-w-lg">
-                Rent a Royal Enfield Himalayan 450 and carve your own path
-                through the American West. No guides. No schedule. Just the road.
+                Rent a Royal Enfield Himalayan 450 in Rapid City and explore
+                the Black Hills, Badlands, and beyond.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link
@@ -149,7 +149,7 @@ export default function HomePage() {
                 {
                   step: "04",
                   title: "Ride",
-                  desc: "Pick up your bike at our designated location. Luggage racks and support contact included.",
+                  desc: "Pick up your bike in Rapid City. Luggage racks and support contact included. The Black Hills are waiting.",
                 },
               ].map((item) => (
                 <div key={item.step}>
@@ -195,8 +195,8 @@ export default function HomePage() {
                 },
                 {
                   icon: "🗺",
-                  title: "Route Expertise",
-                  desc: "Not sure where to go? We'll suggest routes, share GPX tracks, and point you to the same roads our Freedom Tour guides use.",
+                  title: "Local Knowledge",
+                  desc: "Not sure where to go? We'll suggest the best routes through the Black Hills, Badlands, and Spearfish Canyon — the same roads our guides ride every season.",
                 },
               ].map((card) => (
                 <div key={card.title} className="bg-white p-8 rounded-sm border border-[#e8e6e0]">
@@ -242,8 +242,8 @@ export default function HomePage() {
                   a: "The bike, panniers, a tank bag, a phone/GPS mount, and 24/7 support contact. Fuel and accommodation are not included.",
                 },
                 {
-                  q: "Can I pick my own route?",
-                  a: "Absolutely — that's the whole point. We can suggest itineraries and share GPX tracks, but your schedule is your own.",
+                  q: "Where can I ride?",
+                  a: "Anywhere you like from our Rapid City base. Popular rides include the Black Hills, Badlands National Park, Needles Highway, Spearfish Canyon, and Mount Rushmore. We'll share GPX tracks on request.",
                 },
                 {
                   q: "What happens if the bike breaks down?",

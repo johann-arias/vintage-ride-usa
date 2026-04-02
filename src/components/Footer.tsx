@@ -11,9 +11,8 @@ export default function Footer() {
               <span className="text-[#c8a45a] font-light text-sm tracking-wider">USA</span>
             </div>
             <p className="text-sm leading-relaxed">
-              A subsidiary of Vintage Rides, the world leader in guided
-              motorcycle adventures. Now bringing that same spirit to
-              self-guided exploration across America.
+              Motorcycle rentals in Rapid City, SD — gateway to the Black Hills,
+              Badlands, and Spearfish Canyon. A Vintage Rides company.
             </p>
           </div>
 
