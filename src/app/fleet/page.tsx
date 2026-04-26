@@ -56,7 +56,7 @@ export default function FleetPage() {
               <span className="font-semibold">Himalayan 450</span>
             </h1>
             <p className="text-white/60 text-lg max-w-lg">
-              10 bikes. All 2024. Maintained to the same standard we use for our
+              10 bikes. All 2025. Maintained to the same standard we use for our
               guided tours across 4 continents.
             </p>
           </div>
