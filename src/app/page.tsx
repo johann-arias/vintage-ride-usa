@@ -11,7 +11,7 @@ export default function HomePage() {
         <section className="relative h-screen min-h-[600px] bg-[#111110] flex items-center overflow-hidden">
           <div
             className="absolute inset-0 bg-cover bg-center opacity-40"
-            style={{ backgroundImage: "url('/hero-placeholder.jpg')" }}
+            style={{ backgroundImage: "url('/hero-bike-outdoor.jpg')" }}
             aria-hidden
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#111110] via-[#111110]/70 to-transparent" aria-hidden />
@@ -106,13 +106,12 @@ export default function HomePage() {
                 </Link>
               </div>
               <div className="relative">
-                <div className="aspect-[4/3] bg-[#e8e6e0] rounded-sm overflow-hidden flex items-center justify-center">
-                  <div className="text-center text-[#6b6b6b]">
-                    <div className="text-5xl mb-3">🏍</div>
-                    <p className="text-sm tracking-wider uppercase">Bike photo placeholder</p>
-                    <p className="text-xs mt-1 opacity-60">Royal Enfield Himalayan 450</p>
-                  </div>
-                </div>
+                <div
+                  className="aspect-[4/3] bg-[#e8e6e0] bg-cover bg-center rounded-sm overflow-hidden"
+                  style={{ backgroundImage: "url('/bike-studio.jpg')" }}
+                  role="img"
+                  aria-label="Royal Enfield Himalayan 450"
+                />
                 <div className="absolute -bottom-6 -left-6 bg-[#c8a45a] text-[#111110] px-6 py-4 rounded-sm hidden md:block">
                   <div className="text-2xl font-light">$130/day</div>
                   <div className="text-xs font-semibold tracking-wider uppercase">+ tax</div>

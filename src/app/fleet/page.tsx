@@ -65,13 +65,12 @@ export default function FleetPage() {
         {/* Bike hero image */}
         <section className="bg-[#1a1a18]">
           <div className="max-w-7xl mx-auto px-6 py-12">
-            <div className="aspect-[16/7] bg-[#2a2a28] rounded-sm overflow-hidden flex items-center justify-center">
-              <div className="text-center text-white/30">
-                <div className="text-8xl mb-4">🏍</div>
-                <p className="text-sm tracking-widest uppercase">Hero bike photo</p>
-                <p className="text-xs mt-1 opacity-50">Royal Enfield Himalayan 450 — Sleet Grey</p>
-              </div>
-            </div>
+            <div
+              className="aspect-[16/7] bg-[#2a2a28] bg-cover bg-center rounded-sm overflow-hidden"
+              style={{ backgroundImage: "url('/hero-bike-outdoor.jpg')" }}
+              role="img"
+              aria-label="Royal Enfield Himalayan 450 in the Black Hills"
+            />
           </div>
         </section>
 
@@ -124,20 +123,32 @@ export default function FleetPage() {
           </div>
         </section>
 
-        {/* Fleet gallery placeholder */}
+        {/* Fleet gallery */}
         <section className="bg-white py-20">
           <div className="max-w-7xl mx-auto px-6">
-            <p className="text-[#c8a45a] text-xs font-semibold tracking-[0.25em] uppercase mb-8 text-center">The Fleet</p>
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-              {Array.from({ length: 10 }, (_, i) => (
-                <div
-                  key={i}
-                  className="aspect-square bg-[#f0ede6] rounded-sm flex flex-col items-center justify-center gap-2"
-                >
-                  <span className="text-2xl">🏍</span>
-                  <span className="text-[#6b6b6b] text-xs tracking-wider">#{String(i + 1).padStart(2, "0")}</span>
-                </div>
-              ))}
+            <div className="text-center mb-10">
+              <p className="text-[#c8a45a] text-xs font-semibold tracking-[0.25em] uppercase mb-4">The Fleet</p>
+              <h2 className="text-[#111110] text-3xl md:text-4xl font-light">Ten bikes, ready to ride</h2>
+            </div>
+            <div
+              className="aspect-[16/9] bg-cover bg-center rounded-sm overflow-hidden mb-3"
+              style={{ backgroundImage: "url('/fleet-lineup-wall.jpg')" }}
+              role="img"
+              aria-label="The Vintage Rides USA fleet of 10 Royal Enfield Himalayan 450s lined up at our Rapid City base"
+            />
+            <div className="grid grid-cols-2 gap-3">
+              <div
+                className="aspect-[4/3] bg-cover bg-center rounded-sm overflow-hidden"
+                style={{ backgroundImage: "url('/fleet-lineup-side.jpg')" }}
+                role="img"
+                aria-label="Fleet lineup, side view"
+              />
+              <div
+                className="aspect-[4/3] bg-cover bg-center rounded-sm overflow-hidden"
+                style={{ backgroundImage: "url('/bike-outdoor-cliff.jpg')" }}
+                role="img"
+                aria-label="Royal Enfield Himalayan 450 in the Black Hills"
+              />
             </div>
           </div>
         </section>
