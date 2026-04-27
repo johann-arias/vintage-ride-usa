@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { PICKUP_LOCATION, PICKUP_DIRECTIONS_URL, PICKUP_MAP_EMBED_URL } from "@/lib/location";
 
 export default function HomePage() {
   return (
@@ -258,6 +259,49 @@ export default function HomePage() {
                   <p className="text-[#6b6b6b] text-sm leading-relaxed">{item.a}</p>
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── Find Us ──────────────────────────────────────────────────────── */}
+        <section className="bg-[#1a1a18] py-24">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div>
+                <p className="text-[#c8a45a] text-xs font-semibold tracking-[0.25em] uppercase mb-4">Find Us</p>
+                <h2 className="text-white text-4xl md:text-5xl font-light leading-tight mb-6">
+                  Our garage in<br />
+                  <span className="font-semibold">Rapid City</span>
+                </h2>
+                <p className="text-white/60 text-lg leading-relaxed mb-8 max-w-md">
+                  Pick up your bike at our base on the western edge of Rapid City — minutes from
+                  Highway 16 and the gateway to Mount Rushmore, the Black Hills, and beyond.
+                </p>
+                <address className="not-italic text-white text-base leading-relaxed mb-6">
+                  <span className="block font-semibold tracking-wide">{PICKUP_LOCATION.name}</span>
+                  <span className="block text-white/70">{PICKUP_LOCATION.street}</span>
+                  <span className="block text-white/70">
+                    {PICKUP_LOCATION.city}, {PICKUP_LOCATION.state} {PICKUP_LOCATION.zip}
+                  </span>
+                </address>
+                <a
+                  href={PICKUP_DIRECTIONS_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block border border-[#c8a45a] text-[#c8a45a] hover:bg-[#c8a45a] hover:text-[#111110] font-medium tracking-wider px-6 py-3 rounded-sm transition-colors text-sm uppercase"
+                >
+                  Get Directions
+                </a>
+              </div>
+              <div className="aspect-[4/3] md:aspect-auto md:h-[420px] rounded-sm overflow-hidden border border-white/10">
+                <iframe
+                  title="Vintage Rides USA pickup location"
+                  src={PICKUP_MAP_EMBED_URL}
+                  className="w-full h-full border-0"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              </div>
             </div>
           </div>
         </section>
