@@ -135,6 +135,8 @@ export async function getBikesCommittedToTours(
 
 /**
  * Returns how many bikes are blocked by confirmed rentals overlapping [start, end].
+ * Excludes blocks tagged as Stripe test-mode sessions so dev bookings don't eat
+ * into real availability.
  */
 export async function getBikesBlockedByRentals(
   startDate: string,
@@ -145,6 +147,7 @@ export async function getBikesBlockedByRentals(
       filterByFormula: `AND(
         {Type} = "RENTAL",
         {Status} != "Cancelled",
+        FIND("cs_test_", {Notes}) = 0,
         IS_BEFORE({Start Date}, DATEADD("${endDate}", 1, "days")),
         IS_AFTER({End Date}, DATEADD("${startDate}", -1, "days"))
       )`,
