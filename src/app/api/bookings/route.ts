@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import base, { Tables } from "@/lib/airtable";
-import { sendBookingConfirmation } from "@/lib/email";
+import { sendBookingConfirmation, sendInternalBookingNotification } from "@/lib/email";
 import { nanoid } from "nanoid";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -76,6 +76,9 @@ export async function POST(req: NextRequest) {
   await base(Tables.Blocks).create(blockRecords);
 
   // 3. Send booking confirmation email — non-blocking for the webhook ack
+  const totalPrice = (session.amount_total ?? 0) / 100;
+  const totalDays = parseInt(meta.totalDays ?? "0", 10);
+
   if (meta.email) {
     try {
       await sendBookingConfirmation({
@@ -85,12 +88,33 @@ export async function POST(req: NextRequest) {
         email: meta.email,
         startDate: meta.startDate,
         endDate: meta.endDate,
-        totalDays: parseInt(meta.totalDays ?? "0", 10),
+        totalDays,
         bikeCount,
-        totalPrice: (session.amount_total ?? 0) / 100,
+        totalPrice,
       });
     } catch (err) {
       console.error("Booking confirmation email failed:", err);
+    }
+  }
+
+  // 4. Notify Wendy + Johann on every LIVE booking (skip TEST-mode events)
+  if (event.livemode) {
+    try {
+      await sendInternalBookingNotification({
+        bookingId,
+        firstName: meta.firstName ?? "",
+        lastName: meta.lastName ?? "",
+        email: meta.email ?? "",
+        phone: meta.phone ?? "",
+        startDate: meta.startDate,
+        endDate: meta.endDate,
+        totalDays,
+        bikeCount,
+        totalPrice,
+        livemode: true,
+      });
+    } catch (err) {
+      console.error("Internal booking notification failed:", err);
     }
   }
 

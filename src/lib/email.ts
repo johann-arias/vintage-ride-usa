@@ -12,10 +12,20 @@ interface BookingConfirmationInput {
   totalPrice: number;
 }
 
+interface InternalNotificationInput extends BookingConfirmationInput {
+  phone?: string;
+  livemode: boolean;
+}
+
 const BREVO_ENDPOINT = "https://api.brevo.com/v3/smtp/email";
 
 const SENDER = { name: "Vintage Rides USA", email: "bookings@vintagerides.com" };
 const REPLY_TO = { name: "Vintage Rides USA", email: "wendy@vintagerides.travel" };
+
+const INTERNAL_RECIPIENTS = [
+  { email: "wendy@vintagerides.travel", name: "Wendy" },
+  { email: "johann.arias.ja@gmail.com", name: "Johann" },
+];
 
 function fmtDate(iso: string): string {
   const d = new Date(iso + "T00:00:00");
@@ -233,6 +243,87 @@ function renderText(b: BookingConfirmationInput): string {
     `Royal Enfield Himalayan 450 rentals — Rapid City, SD`,
     `https://www.vintageridesusa.com`,
   ].join("\n");
+}
+
+export async function sendInternalBookingNotification(b: InternalNotificationInput): Promise<void> {
+  const apiKey = process.env.BREVO_API_KEY;
+  if (!apiKey) {
+    console.error("BREVO_API_KEY missing — skipping internal booking notification");
+    return;
+  }
+
+  const tag = b.livemode ? "" : " [TEST]";
+  const subject = `${b.livemode ? "" : "[TEST] "}New booking · ${b.firstName} ${b.lastName} · ${b.bookingId}`;
+  const fullName = `${b.firstName} ${b.lastName}`.trim() || "(no name)";
+
+  const lines = [
+    `New rental booking on vintageridesusa.com${tag}`,
+    ``,
+    `Booking:    ${b.bookingId}`,
+    `Status:     ${b.livemode ? "LIVE — payment captured" : "TEST mode (no real payment)"}`,
+    ``,
+    `Customer:   ${fullName}`,
+    `Email:      ${b.email}`,
+    `Phone:      ${b.phone || "(not provided)"}`,
+    ``,
+    `Pickup:     ${fmtDate(b.startDate)} (9:00 AM)`,
+    `Return:     ${fmtDate(b.endDate)} (9:00 AM)`,
+    `Duration:   ${b.totalDays} ${b.totalDays === 1 ? "day" : "days"}`,
+    `Bikes:      ${b.bikeCount} ${b.bikeCount === 1 ? "bike" : "bikes"}`,
+    `Total paid: ${fmtMoney(b.totalPrice)}`,
+    ``,
+    `Confirmation email already sent to the customer.`,
+  ].join("\n");
+
+  const html = `<!DOCTYPE html>
+<html><body style="margin:0;padding:24px;background:#f4f1ea;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;color:#2a2a28;">
+  <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;margin:0 auto;background:#ffffff;border:1px solid #e8e6e0;">
+    <tr><td style="background:#111110;padding:20px 24px;">
+      <div style="font-size:11px;font-weight:600;letter-spacing:0.25em;text-transform:uppercase;color:#c8a45a;">New booking${tag}</div>
+      <div style="color:#ffffff;font-size:13px;letter-spacing:0.18em;text-transform:uppercase;font-weight:600;margin-top:6px;">VINTAGE RIDES <span style="color:#c8a45a;font-weight:400;">USA</span></div>
+    </td></tr>
+    <tr><td style="padding:24px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="font-size:14px;line-height:1.6;color:#2a2a28;">
+        <tr><td style="padding:6px 0;color:#8a8a86;width:140px;">Booking</td><td style="font-family:'SF Mono',Menlo,Consolas,monospace;color:#111110;">${escapeHtml(b.bookingId)}</td></tr>
+        <tr><td style="padding:6px 0;color:#8a8a86;">Status</td><td style="color:${b.livemode ? "#111110" : "#b34b00"};font-weight:${b.livemode ? "400" : "600"};">${b.livemode ? "LIVE — payment captured" : "TEST mode (no real payment)"}</td></tr>
+        <tr><td colspan="2" style="padding:8px 0;"><div style="border-top:1px solid #e8e6e0;"></div></td></tr>
+        <tr><td style="padding:6px 0;color:#8a8a86;">Customer</td><td style="color:#111110;font-weight:600;">${escapeHtml(fullName)}</td></tr>
+        <tr><td style="padding:6px 0;color:#8a8a86;">Email</td><td><a href="mailto:${escapeHtml(b.email)}" style="color:#c8a45a;text-decoration:none;">${escapeHtml(b.email)}</a></td></tr>
+        <tr><td style="padding:6px 0;color:#8a8a86;">Phone</td><td>${b.phone ? `<a href="tel:${escapeHtml(b.phone)}" style="color:#c8a45a;text-decoration:none;">${escapeHtml(b.phone)}</a>` : '<span style="color:#8a8a86;">(not provided)</span>'}</td></tr>
+        <tr><td colspan="2" style="padding:8px 0;"><div style="border-top:1px solid #e8e6e0;"></div></td></tr>
+        <tr><td style="padding:6px 0;color:#8a8a86;">Pickup</td><td style="color:#111110;">${fmtDate(b.startDate)} · 9:00 AM</td></tr>
+        <tr><td style="padding:6px 0;color:#8a8a86;">Return</td><td style="color:#111110;">${fmtDate(b.endDate)} · 9:00 AM</td></tr>
+        <tr><td style="padding:6px 0;color:#8a8a86;">Duration</td><td style="color:#111110;">${b.totalDays} ${b.totalDays === 1 ? "day" : "days"}</td></tr>
+        <tr><td style="padding:6px 0;color:#8a8a86;">Bikes</td><td style="color:#111110;">${b.bikeCount} ${b.bikeCount === 1 ? "bike" : "bikes"}</td></tr>
+        <tr><td style="padding:6px 0;color:#8a8a86;">Total paid</td><td style="color:#111110;font-weight:600;">${fmtMoney(b.totalPrice)}</td></tr>
+      </table>
+      <p style="margin:24px 0 0;font-size:12px;color:#8a8a86;">Confirmation email already sent to the customer.</p>
+    </td></tr>
+  </table>
+</body></html>`;
+
+  const res = await fetch(BREVO_ENDPOINT, {
+    method: "POST",
+    headers: {
+      "api-key": apiKey,
+      "content-type": "application/json",
+      accept: "application/json",
+    },
+    body: JSON.stringify({
+      sender: SENDER,
+      replyTo: { email: b.email, name: fullName },
+      to: INTERNAL_RECIPIENTS,
+      subject,
+      htmlContent: html,
+      textContent: lines,
+      tags: ["booking-internal-notification", "vintage-rides-usa", b.livemode ? "live" : "test"],
+    }),
+  });
+
+  if (!res.ok) {
+    const body = await res.text().catch(() => "");
+    throw new Error(`Brevo internal notification failed ${res.status}: ${body}`);
+  }
 }
 
 function escapeHtml(s: string): string {
