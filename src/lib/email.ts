@@ -1,3 +1,5 @@
+import { PICKUP_LOCATION, PICKUP_ADDRESS_INLINE, PICKUP_DIRECTIONS_URL } from "./location";
+
 interface BookingConfirmationInput {
   bookingId: string;
   firstName: string;
@@ -140,12 +142,27 @@ function renderHtml(b: BookingConfirmationInput): string {
           </tr>
 
           <tr>
-            <td style="padding:32px 32px 8px;">
+            <td style="padding:24px 32px 8px;">
+              <div style="font-size:11px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#c8a45a;margin-bottom:12px;">Pickup location</div>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid #e8e6e0;border-radius:2px;background:#faf8f3;">
+                <tr>
+                  <td style="padding:18px 20px;">
+                    <div style="font-size:15px;font-weight:600;color:#111110;margin-bottom:4px;">${escapeHtml(PICKUP_LOCATION.name)}</div>
+                    <div style="font-size:14px;color:#2a2a28;line-height:1.5;">${escapeHtml(PICKUP_LOCATION.street)}<br />${escapeHtml(PICKUP_LOCATION.city)}, ${escapeHtml(PICKUP_LOCATION.state)} ${escapeHtml(PICKUP_LOCATION.zip)}</div>
+                    <a href="${PICKUP_DIRECTIONS_URL}" style="display:inline-block;margin-top:12px;font-size:13px;color:#c8a45a;text-decoration:none;font-weight:600;">Get directions →</a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="padding:24px 32px 8px;">
               <div style="font-size:11px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:#c8a45a;margin-bottom:14px;">What's next</div>
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 ${[
                   "Save this email — your booking reference is your check-in code.",
-                  "We'll send pickup location and instructions 7 days before your start date.",
+                  `On your start date, head to ${PICKUP_ADDRESS_INLINE}.`,
                   "Want GPX routes for the Black Hills, Badlands or Needles Highway? Just reply.",
                 ]
                   .map(
@@ -197,9 +214,15 @@ function renderText(b: BookingConfirmationInput): string {
     `Bikes:    ${b.bikeCount} ${bikeWord}`,
     `Total:    ${fmtMoney(b.totalPrice)} (tax included, paid via Stripe)`,
     ``,
+    `Pickup location:`,
+    `  ${PICKUP_LOCATION.name}`,
+    `  ${PICKUP_LOCATION.street}`,
+    `  ${PICKUP_LOCATION.city}, ${PICKUP_LOCATION.state} ${PICKUP_LOCATION.zip}`,
+    `  Directions: ${PICKUP_DIRECTIONS_URL}`,
+    ``,
     `What's next:`,
     `1. Save this email — your booking reference is your check-in code.`,
-    `2. We'll send pickup location and instructions 7 days before your start date.`,
+    `2. On your start date, head to ${PICKUP_ADDRESS_INLINE}.`,
     `3. Want GPX routes for the Black Hills, Badlands or Needles Highway? Just reply.`,
     ``,
     `Questions? Reply to this email.`,

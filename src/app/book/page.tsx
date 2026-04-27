@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { PICKUP_LOCATION, PICKUP_DIRECTIONS_URL, PICKUP_MAP_EMBED_URL } from "@/lib/location";
 
 type AvailabilityResult = {
   availableCount: number;
@@ -429,6 +430,30 @@ export default function BookPage() {
                   By proceeding you agree to our Terms & Conditions. Full payment is charged at checkout.
                   Cancellation policy: 100% refund if cancelled 30+ days before pickup, 50% within 30 days, no refund within 7 days.
                 </p>
+              </div>
+
+              <div className="bg-white rounded-sm border border-[#e8e6e0] overflow-hidden">
+                <div className="p-6 pb-4">
+                  <p className="text-[10px] font-semibold tracking-[0.22em] uppercase text-[#c8a45a] mb-2">Pickup location</p>
+                  <p className="text-[#111110] font-semibold">{PICKUP_LOCATION.name}</p>
+                  <p className="text-[#2a2a28] text-sm mt-1">{PICKUP_LOCATION.street}</p>
+                  <p className="text-[#2a2a28] text-sm">{PICKUP_LOCATION.city}, {PICKUP_LOCATION.state} {PICKUP_LOCATION.zip}</p>
+                  <a
+                    href={PICKUP_DIRECTIONS_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block mt-3 text-sm text-[#c8a45a] hover:text-[#a07e3a] font-medium"
+                  >
+                    Get directions →
+                  </a>
+                </div>
+                <iframe
+                  title="Pickup location map"
+                  src={PICKUP_MAP_EMBED_URL}
+                  className="w-full h-56 border-0"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
               </div>
 
               <div className="flex gap-4">

@@ -1,10 +1,11 @@
 import Link from "next/link";
+import { PICKUP_LOCATION, PICKUP_MAPS_URL } from "@/lib/location";
 
 export default function Footer() {
   return (
     <footer className="bg-[#111110] text-white/60 mt-auto">
       <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-10">
           <div>
             <div className="flex items-center gap-2 mb-4">
               <span className="text-white font-semibold tracking-widest text-sm uppercase">Vintage Rides</span>
@@ -24,6 +25,22 @@ export default function Footer() {
               <li><Link href="/#how-it-works" className="hover:text-white transition-colors">How It Works</Link></li>
               <li><Link href="/#faq" className="hover:text-white transition-colors">FAQ</Link></li>
             </ul>
+          </div>
+
+          <div>
+            <h4 className="text-white text-xs font-semibold tracking-widest uppercase mb-4">Pickup</h4>
+            <address className="not-italic text-sm leading-relaxed mb-3">
+              {PICKUP_LOCATION.street}<br />
+              {PICKUP_LOCATION.city}, {PICKUP_LOCATION.state} {PICKUP_LOCATION.zip}
+            </address>
+            <a
+              href={PICKUP_MAPS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs text-[#c8a45a] hover:text-[#e8c98a] transition-colors"
+            >
+              Open in Google Maps →
+            </a>
           </div>
 
           <div>
