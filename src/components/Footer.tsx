@@ -30,11 +30,6 @@ export default function Footer() {
             <h4 className="text-white text-xs font-semibold tracking-widest uppercase mb-4">Contact</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="mailto:usa@vintagerides.com" className="hover:text-white transition-colors">
-                  usa@vintagerides.com
-                </a>
-              </li>
-              <li>
                 <a href="https://www.vintagerides.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
                   vintagerides.com
                 </a>
