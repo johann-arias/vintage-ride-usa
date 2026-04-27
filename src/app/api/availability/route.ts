@@ -6,6 +6,11 @@ import {
   isPeriodInRentalSeason,
 } from "@/lib/airtable";
 
+const NO_STORE = { "cache-control": "no-store, no-cache, must-revalidate" };
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export async function GET(req: NextRequest) {
   const { searchParams } = req.nextUrl;
   const startDate = searchParams.get("startDate");
@@ -13,29 +18,32 @@ export async function GET(req: NextRequest) {
   const bikes = parseInt(searchParams.get("bikes") ?? "1", 10);
 
   if (!startDate || !endDate) {
-    return NextResponse.json({ error: "startDate and endDate are required" }, { status: 400 });
+    return NextResponse.json({ error: "startDate and endDate are required" }, { status: 400, headers: NO_STORE });
   }
 
   const start = new Date(startDate);
   const end = new Date(endDate);
 
   if (isNaN(start.getTime()) || isNaN(end.getTime())) {
-    return NextResponse.json({ error: "Invalid date format" }, { status: 400 });
+    return NextResponse.json({ error: "Invalid date format" }, { status: 400, headers: NO_STORE });
   }
 
   if (end <= start) {
-    return NextResponse.json({ error: "endDate must be after startDate" }, { status: 400 });
+    return NextResponse.json({ error: "endDate must be after startDate" }, { status: 400, headers: NO_STORE });
   }
 
   // Bikes are in Arizona Oct–Apr only
   if (!isPeriodInRentalSeason(startDate, endDate)) {
-    return NextResponse.json({
-      availableCount: 0,
-      requested: bikes,
-      canBook: false,
-      outOfSeason: true,
-      pricing: null,
-    });
+    return NextResponse.json(
+      {
+        availableCount: 0,
+        requested: bikes,
+        canBook: false,
+        outOfSeason: true,
+        pricing: null,
+      },
+      { headers: NO_STORE }
+    );
   }
 
   try {
@@ -46,19 +54,22 @@ export async function GET(req: NextRequest) {
 
     const pricing = calculateRentalPrice(startDate, endDate, bikes, pricingRules);
 
-    return NextResponse.json({
-      availableCount,
-      requested: bikes,
-      canBook: availableCount >= bikes,
-      outOfSeason: false,
-      pricing: {
-        dailyRate: pricing.dailyRate,
-        totalDays: pricing.totalDays,
-        subtotal: pricing.subtotal,
-        tax: pricing.tax,
-        totalPrice: pricing.totalPrice,
+    return NextResponse.json(
+      {
+        availableCount,
+        requested: bikes,
+        canBook: availableCount >= bikes,
+        outOfSeason: false,
+        pricing: {
+          dailyRate: pricing.dailyRate,
+          totalDays: pricing.totalDays,
+          subtotal: pricing.subtotal,
+          tax: pricing.tax,
+          totalPrice: pricing.totalPrice,
+        },
       },
-    });
+      { headers: NO_STORE }
+    );
   } catch (err) {
     console.error("Availability check failed:", err);
     const message = err instanceof Error ? err.message : String(err);
