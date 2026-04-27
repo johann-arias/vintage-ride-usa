@@ -150,6 +150,7 @@ const businessJsonLd = {
   },
   makesOffer: {
     "@type": "Offer",
+    "@id": `${SITE_URL}#daily-rental-offer`,
     name: "Royal Enfield Himalayan 450 daily rental",
     priceCurrency: "USD",
     price: "130",
@@ -162,19 +163,8 @@ const businessJsonLd = {
     availability: "https://schema.org/InStock",
     availabilityStarts: "2026-05-01",
     availabilityEnds: "2026-09-30",
-    itemOffered: {
-      "@type": "Motorcycle",
-      name: "2025 Royal Enfield Himalayan 450",
-      brand: "Royal Enfield",
-      model: "Himalayan 450",
-      vehicleModelDate: "2025",
-      vehicleEngine: {
-        "@type": "EngineSpecification",
-        engineDisplacement: { "@type": "QuantitativeValue", value: 452, unitCode: "CMQ" },
-      },
-      fuelType: "Gasoline",
-    },
     seller: { "@id": `${SITE_URL}#business` },
+    itemOffered: { "@id": `${SITE_URL}#himalayan-450` },
   },
   sameAs: [
     "https://www.vintagerides.com",
@@ -190,6 +180,47 @@ const websiteJsonLd = {
   name: "Vintage Rides USA",
   publisher: { "@id": `${SITE_URL}#business` },
   inLanguage: "en-US",
+};
+
+const motorcycleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": ["Motorcycle", "Product"],
+  "@id": `${SITE_URL}#himalayan-450`,
+  name: "2025 Royal Enfield Himalayan 450",
+  description:
+    "Brand-new 2025 Royal Enfield Himalayan 450 adventure motorcycle available for rent at Vintage Rides USA in Rapid City, SD. 452cc single-cylinder engine, long-travel suspension, ideal for the Black Hills, Badlands, and Needles Highway.",
+  image: [
+    `${SITE_URL}/bike-studio.jpg`,
+    `${SITE_URL}/hero-bike-outdoor.jpg`,
+  ],
+  brand: { "@type": "Brand", name: "Royal Enfield" },
+  manufacturer: { "@type": "Organization", name: "Royal Enfield" },
+  model: "Himalayan 450",
+  vehicleModelDate: "2025",
+  vehicleEngine: {
+    "@type": "EngineSpecification",
+    engineDisplacement: { "@type": "QuantitativeValue", value: 452, unitCode: "CMQ" },
+  },
+  fuelType: "Gasoline",
+  numberOfForwardGears: 6,
+  category: "Adventure motorcycle rental",
+  offers: {
+    "@type": "Offer",
+    url: `${SITE_URL}/book`,
+    priceCurrency: "USD",
+    price: "130",
+    priceSpecification: {
+      "@type": "UnitPriceSpecification",
+      price: "130",
+      priceCurrency: "USD",
+      unitText: "DAY",
+    },
+    availability: "https://schema.org/InStock",
+    availabilityStarts: "2026-05-01",
+    availabilityEnds: "2026-09-30",
+    seller: { "@id": `${SITE_URL}#business` },
+    areaServed: { "@type": "AdministrativeArea", name: "South Dakota" },
+  },
 };
 
 export default function RootLayout({
@@ -210,6 +241,10 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(motorcycleJsonLd) }}
         />
         {children}
         <ContactButton />
