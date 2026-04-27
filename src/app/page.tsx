@@ -277,13 +277,16 @@ export default function HomePage() {
                   Pick up your bike at our base on the western edge of Rapid City — minutes from
                   Highway 16 and the gateway to Mount Rushmore, the Black Hills, and beyond.
                 </p>
-                <address className="not-italic text-white text-base leading-relaxed mb-6">
+                <address className="not-italic text-white text-base leading-relaxed mb-4">
                   <span className="block font-semibold tracking-wide">{PICKUP_LOCATION.name}</span>
                   <span className="block text-white/70">{PICKUP_LOCATION.street}</span>
                   <span className="block text-white/70">
                     {PICKUP_LOCATION.city}, {PICKUP_LOCATION.state} {PICKUP_LOCATION.zip}
                   </span>
                 </address>
+                <p className="text-white/60 text-sm mb-6">
+                  Pickup at <span className="text-white font-medium">9:00 AM</span> · Return by <span className="text-white font-medium">9:00 AM</span>
+                </p>
                 <a
                   href={PICKUP_DIRECTIONS_URL}
                   target="_blank"

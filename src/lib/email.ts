@@ -149,6 +149,7 @@ function renderHtml(b: BookingConfirmationInput): string {
                   <td style="padding:18px 20px;">
                     <div style="font-size:15px;font-weight:600;color:#111110;margin-bottom:4px;">${escapeHtml(PICKUP_LOCATION.name)}</div>
                     <div style="font-size:14px;color:#2a2a28;line-height:1.5;">${escapeHtml(PICKUP_LOCATION.street)}<br />${escapeHtml(PICKUP_LOCATION.city)}, ${escapeHtml(PICKUP_LOCATION.state)} ${escapeHtml(PICKUP_LOCATION.zip)}</div>
+                    <div style="font-size:13px;color:#2a2a28;margin-top:10px;">Pickup at <strong style="color:#111110;">9:00 AM</strong> · Return by <strong style="color:#111110;">9:00 AM</strong></div>
                     <a href="${PICKUP_DIRECTIONS_URL}" style="display:inline-block;margin-top:12px;font-size:13px;color:#c8a45a;text-decoration:none;font-weight:600;">Get directions →</a>
                   </td>
                 </tr>
@@ -162,7 +163,7 @@ function renderHtml(b: BookingConfirmationInput): string {
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 ${[
                   "Save this email — your booking reference is your check-in code.",
-                  `On your start date, head to ${PICKUP_ADDRESS_INLINE}.`,
+                  `On your start date, head to ${PICKUP_ADDRESS_INLINE} for 9:00 AM pickup. Return by 9:00 AM on your end date.`,
                   "Want GPX routes for the Black Hills, Badlands or Needles Highway? Just reply.",
                 ]
                   .map(
@@ -218,11 +219,12 @@ function renderText(b: BookingConfirmationInput): string {
     `  ${PICKUP_LOCATION.name}`,
     `  ${PICKUP_LOCATION.street}`,
     `  ${PICKUP_LOCATION.city}, ${PICKUP_LOCATION.state} ${PICKUP_LOCATION.zip}`,
+    `  Pickup at 9:00 AM · Return by 9:00 AM`,
     `  Directions: ${PICKUP_DIRECTIONS_URL}`,
     ``,
     `What's next:`,
     `1. Save this email — your booking reference is your check-in code.`,
-    `2. On your start date, head to ${PICKUP_ADDRESS_INLINE}.`,
+    `2. On your start date, head to ${PICKUP_ADDRESS_INLINE} for 9:00 AM pickup. Return by 9:00 AM on your end date.`,
     `3. Want GPX routes for the Black Hills, Badlands or Needles Highway? Just reply.`,
     ``,
     `Questions? Reply to this email.`,

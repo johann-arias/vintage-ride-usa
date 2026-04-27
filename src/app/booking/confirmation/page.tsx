@@ -31,6 +31,9 @@ export default function ConfirmationPage() {
               <p className="text-[#111110] font-semibold text-base">{PICKUP_LOCATION.name}</p>
               <p className="text-[#2a2a28] text-sm mt-1">{PICKUP_LOCATION.street}</p>
               <p className="text-[#2a2a28] text-sm">{PICKUP_LOCATION.city}, {PICKUP_LOCATION.state} {PICKUP_LOCATION.zip}</p>
+              <p className="text-[#2a2a28] text-sm mt-3">
+                Pickup at <span className="font-medium text-[#111110]">9:00 AM</span> · Return by <span className="font-medium text-[#111110]">9:00 AM</span>
+              </p>
               <a
                 href={PICKUP_DIRECTIONS_URL}
                 target="_blank"
@@ -53,7 +56,7 @@ export default function ConfirmationPage() {
             <h2 className="text-[#111110] font-semibold mb-4">What&apos;s next</h2>
             {[
               "Check your inbox for your confirmation email — your booking reference is your check-in code.",
-              `Pickup is at ${PICKUP_ADDRESS_INLINE} on your start date — directions above.`,
+              `Pickup is at 9:00 AM on your start date, ${PICKUP_ADDRESS_INLINE}. Return by 9:00 AM on your end date.`,
               "Request GPX routes or route suggestions for the Black Hills, Badlands, or Needles Highway by replying to your confirmation.",
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-3 text-sm text-[#2a2a28]">
