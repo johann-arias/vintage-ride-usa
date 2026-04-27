@@ -18,3 +18,16 @@ export const PICKUP_DIRECTIONS_URL = `https://www.google.com/maps/dir/?api=1&des
 
 // Embeddable iframe map (no API key required).
 export const PICKUP_MAP_EMBED_URL = `https://maps.google.com/maps?q=${QUERY}&output=embed`;
+
+// Contact channels.
+export const CONTACT = {
+  phone: { display: "+1 (605) 646-2343", e164: "+16056462343" },
+  whatsapp: { display: "+1 (760) 350-9700", e164: "+17603509700" },
+  email: "wendy@vintagerides.travel",
+} as const;
+
+export const CONTACT_LINKS = {
+  phone: `tel:${CONTACT.phone.e164}`,
+  whatsapp: `https://wa.me/${CONTACT.whatsapp.e164.replace("+", "")}`,
+  email: `mailto:${CONTACT.email}`,
+} as const;
