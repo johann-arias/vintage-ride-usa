@@ -26,7 +26,6 @@ export default function ConfirmationPage() {
               "Check your inbox for your confirmation email",
               "We'll send pickup location and instructions 7 days before your start date",
               "Request GPX routes or route suggestions by replying to your confirmation",
-              "24/7 support: usa@vintagerides.com",
             ].map((item, i) => (
               <div key={i} className="flex items-start gap-3 text-sm text-[#2a2a28]">
                 <span className="text-[#c8a45a] font-bold shrink-0">{i + 1}.</span>
