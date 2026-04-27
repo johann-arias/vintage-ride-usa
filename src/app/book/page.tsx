@@ -55,11 +55,17 @@ export default function BookPage() {
     if (!startDate || !endDate) return;
     setCheckingAvailability(true);
     setAvailability(null);
+    setError("");
     try {
       const res = await fetch(
-        `/api/availability?startDate=${startDate}&endDate=${endDate}&bikes=${bikeCount}`
+        `/api/availability?startDate=${startDate}&endDate=${endDate}&bikes=${bikeCount}`,
+        { cache: "no-store" }
       );
       const data = await res.json();
+      if (!res.ok || typeof data?.canBook !== "boolean") {
+        setError("Could not check availability. Please try again in a moment.");
+        return;
+      }
       setAvailability(data);
     } catch {
       setError("Could not check availability. Please try again.");
