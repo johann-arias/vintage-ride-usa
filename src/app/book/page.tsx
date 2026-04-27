@@ -172,7 +172,7 @@ export default function BookPage() {
               <div className="bg-white rounded-sm border border-[#e8e6e0] p-8">
                 <h2 className="text-[#111110] font-semibold text-lg mb-6">Select Dates & Bikes</h2>
 
-                <div className="grid md:grid-cols-2 gap-6 mb-6">
+                <div className="grid md:grid-cols-2 gap-6 mb-3">
                   <div>
                     <label className="block text-xs font-semibold tracking-widest uppercase text-[#6b6b6b] mb-2">
                       Pickup Date
@@ -203,6 +203,9 @@ export default function BookPage() {
                     />
                   </div>
                 </div>
+                <p className="text-xs text-[#6b6b6b] mb-6">
+                  Pickup at <span className="text-[#111110] font-medium">9:00 AM</span> · Return by <span className="text-[#111110] font-medium">9:00 AM</span> the following day
+                </p>
 
                 <div className="mb-6">
                   <label className="block text-xs font-semibold tracking-widest uppercase text-[#6b6b6b] mb-2">
@@ -400,8 +403,8 @@ export default function BookPage() {
 
                 <div className="space-y-0 mb-8">
                   {[
-                    { label: "Pickup", value: new Date(startDate).toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" }) },
-                    { label: "Return", value: new Date(endDate).toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" }) },
+                    { label: "Pickup", value: `${new Date(startDate).toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" })} · 9:00 AM` },
+                    { label: "Return", value: `${new Date(endDate).toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" })} · 9:00 AM` },
                     { label: "Duration", value: `${availability.pricing!.totalDays} day${availability.pricing!.totalDays !== 1 ? "s" : ""}` },
                     { label: "Bikes", value: `${bikeCount} × Royal Enfield Himalayan 450` },
                     { label: "Rider", value: `${firstName} ${lastName}` },
