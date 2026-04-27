@@ -61,10 +61,6 @@ export async function GET(req: NextRequest) {
     });
   } catch (err) {
     console.error("Availability check failed:", err);
-    const message = err instanceof Error ? err.message : String(err);
-    return NextResponse.json(
-      { error: "Failed to check availability", debug: message },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Failed to check availability" }, { status: 500 });
   }
 }
