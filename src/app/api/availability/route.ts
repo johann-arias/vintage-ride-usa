@@ -61,6 +61,14 @@ export async function GET(req: NextRequest) {
     });
   } catch (err) {
     console.error("Availability check failed:", err);
-    return NextResponse.json({ error: "Failed to check availability" }, { status: 500 });
+    const message = err instanceof Error ? err.message : String(err);
+    const stack = err instanceof Error ? err.stack : undefined;
+    return NextResponse.json(
+      { error: "Failed to check availability", debug: message, stack },
+      {
+        status: 500,
+        headers: { "cache-control": "no-store, no-cache, must-revalidate" },
+      }
+    );
   }
 }
