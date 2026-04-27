@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import base, { Tables } from "@/lib/airtable";
+import { sendBookingConfirmation } from "@/lib/email";
 import { nanoid } from "nanoid";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -73,6 +74,25 @@ export async function POST(req: NextRequest) {
   }));
 
   await base(Tables.Blocks).create(blockRecords);
+
+  // 3. Send booking confirmation email — non-blocking for the webhook ack
+  if (meta.email) {
+    try {
+      await sendBookingConfirmation({
+        bookingId,
+        firstName: meta.firstName ?? "",
+        lastName: meta.lastName ?? "",
+        email: meta.email,
+        startDate: meta.startDate,
+        endDate: meta.endDate,
+        totalDays: parseInt(meta.totalDays ?? "0", 10),
+        bikeCount,
+        totalPrice: (session.amount_total ?? 0) / 100,
+      });
+    } catch (err) {
+      console.error("Booking confirmation email failed:", err);
+    }
+  }
 
   return NextResponse.json({ received: true, bookingId });
 }
