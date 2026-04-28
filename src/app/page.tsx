@@ -92,6 +92,7 @@ export default function HomePage() {
                     "Long-travel suspension — 200mm front / 210mm rear",
                     "USB-C charging · GPS mount · all-day comfort seat",
                     "Panniers, phone mount & tank bag included",
+                    "Custer State Park + Black Hills National Forest passes included",
                   ].map((spec) => (
                     <li key={spec} className="flex items-start gap-3 text-sm text-[#2a2a28]">
                       <span className="text-[#c8a45a] mt-0.5 shrink-0">—</span>
@@ -239,7 +240,7 @@ export default function HomePage() {
                 },
                 {
                   q: "What's included in the rental?",
-                  a: "The bike, panniers, a tank bag, a phone/GPS mount, and 24/7 support contact. Fuel and accommodation are not included.",
+                  a: "The bike, panniers, a tank bag, a phone/GPS mount, your Custer State Park entrance pass, your Black Hills National Forest trail pass, and 24/7 support contact. Fuel and accommodation are not included.",
                 },
                 {
                   q: "Where can I ride?",

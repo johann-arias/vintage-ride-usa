@@ -25,6 +25,8 @@ const SPECS = [
 ];
 
 const INCLUDED = [
+  "Custer State Park entrance pass",
+  "Black Hills National Forest trail pass",
   "Panniers (2× 28L side cases)",
   "Tank bag (15L)",
   "Phone / GPS RAM mount",
